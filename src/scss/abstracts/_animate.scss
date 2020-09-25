@@ -1,0 +1,67 @@
+@keyframes clicked {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(5px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes down {
+    0% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes leftLeave{
+    0%{
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    100%{
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes leftEnter{
+    0%{
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    
+    
+    100%{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes rightLeave{
+    0%{
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    100%{
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+@keyframes rightEnter{
+    0%{
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    
+    
+    100%{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

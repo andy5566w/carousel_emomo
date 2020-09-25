@@ -1,0 +1,482 @@
+@mixin clearfix {
+    &::after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin absCenter {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@mixin flexCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin formFormat {
+    padding: 5rem 15rem;
+    font-size: 1.5rem;
+    form {
+        background-color: #ffffff;
+        border-radius: 4px;
+        padding: 5rem;
+    }
+
+    @include respond(phone) {
+        padding: 5rem;
+    }
+}
+
+@mixin inputFormat {
+    width: 50%;
+    border: $registration-border;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+}
+
+@mixin sentBtnFormat {
+    display: flex;
+    justify-content: end;
+    .sent {
+        font-size: 1.4rem;
+        color: white;
+        background-color: #1d5ea9;
+        padding: 1.5rem;
+        text-align: center;
+        border-radius: 4px;
+        width: 14.4rem;
+        margin-top: 2rem;
+    }
+}
+
+@mixin flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin nav {
+    text-align: center;
+    li {
+        &:not(:last-child) {
+            margin-right: 10rem;
+            @include respond(phone) {
+                margin-right: 2rem;
+            }
+        }
+        a {
+            font-size: 1.8rem;
+            letter-spacing: 0.35px;
+            color: #3b3b3b;
+            display: block;
+            line-height: calc(7rem - 3px);
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+            &:hover,
+            &.active {
+                color: $roam-color;
+                border-bottom: 3px solid #00a2ff;
+            }
+        }
+    }
+    ul {
+        @include flexCenter;
+    }
+}
+
+@mixin navList {
+    li {
+        display: inline-block;
+
+        &:not(:last-child) {
+            margin-right: 1rem;
+        }
+    }
+    a {
+        font-size: 1.8rem;
+        letter-spacing: 0.35px;
+        color: #3b3b3b;
+        display: block;
+        transition: all 0.2s;
+    }
+}
+
+@mixin dot {
+    position: relative;
+    padding: 0 1.5rem;
+    &::before {
+        content: '';
+        @include absCenter;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: currentColor;
+    }
+}
+
+@mixin commonBtn {
+    width: 100%;
+    border-radius: 4px;
+    height: 4rem;
+    border: solid 1px #c5c5c5;
+    font-size: 1.5rem;
+    color: #787878;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-block;
+    line-height: 4rem;
+    text-align: center;
+
+    &:active {
+        transform: translateY(5px);
+    }
+}
+
+@mixin announce-date {
+    display: inline-block;
+    font-size: 1.4rem;
+    color: #ffffff;
+    border-radius: 14px;
+    background-color: #00a2ff;
+    padding: 0.5rem 1rem;
+    margin-right: 2rem;
+    width: 10rem;
+    text-align: center;
+}
+
+@mixin announce-link {
+    display: inline-block;
+    font-size: 1.6rem;
+    letter-spacing: 0.31px;
+    width: 100%;
+    border-bottom: 1px dotted;
+    padding: 1rem 0;
+    @include respond(phone) {
+        display: block;
+        margin-bottom: 2rem;
+    }
+}
+
+@mixin hoverButtonToEmomeBlue {
+    transition: all 0.2s;
+    &:hover {
+        color: $emome-blue;
+        border-color: $emome-blue;
+    }
+}
+
+@mixin prevBtn {
+    position: relative;
+    &:after {
+        content: ' ';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        top: 50%;
+        left: 54%;
+        border-right: 1px solid #787878;
+        border-bottom: 1px solid #787878;
+        transform: translate(-50%, -50%) rotate(135deg);
+    }
+}
+
+@mixin doublePrevBtn {
+    position: relative;
+    &:after {
+        content: ' ';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        top: 50%;
+        left: 54%;
+        border-right: 1px solid #787878;
+        border-bottom: 1px solid #787878;
+        transform: translate(-50%, -50%) rotate(135deg);
+    }
+    &:before {
+        content: ' ';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        top: 50%;
+        left: 80%;
+        border-right: 1px solid #787878;
+        border-bottom: 1px solid #787878;
+        transform: translate(-50%, -50%) rotate(135deg);
+    }
+}
+
+@mixin nextBtn {
+    position: relative;
+    &:after {
+        content: ' ';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        top: 50%;
+        left: 54%;
+        border-right: 1px solid #787878;
+        border-bottom: 1px solid #787878;
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+}
+
+@mixin doubleNextBtn {
+    position: relative;
+    &:after {
+        content: ' ';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        top: 50%;
+        left: 54%;
+        border-right: 1px solid #787878;
+        border-bottom: 1px solid #787878;
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+    &::before {
+        content: ' ';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        top: 50%;
+        left: 30%;
+        border-right: 1px solid #787878;
+        border-bottom: 1px solid #787878;
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+}
+
+@mixin propagandaAndArticle {
+    .propaganda-cards__list {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 4rem 0;
+        @supports (display: grid) {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 36rem);
+            @include respond(big-desktop) {
+                grid-template-columns: repeat(auto-fit, 35rem);
+            }
+        }
+        &::after {
+            content: '';
+            flex: 0 1 36rem;
+            margin: 1rem;
+            @include respond(big-desktop) {
+                flex: 0 1 30rem;
+            }
+
+            /*  @include respond(tab-land) {
+                flex: 0 1 35rem;
+            } */
+        }
+
+        .propaganda-cards {
+            transition: all 0.2s;
+            overflow: hidden;
+            flex: 0 1 36rem;
+            height: 43rem;
+            border-radius: 9px;
+            box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.22);
+            background-color: #ffffff;
+            margin: 1rem;
+
+            .img {
+                width: 100%;
+                height: 15rem;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: fill;
+                }
+            }
+
+            .title {
+                margin: 0 1.5rem;
+                height: 13rem;
+                // height: 100%;
+                border-bottom: solid 1px #c5c5c5;
+                font-size: 1.4rem;
+                padding-top: 2rem;
+
+                div {
+                    &:first-child {
+                        color: $popular-color;
+                        margin-right: 1rem;
+                    }
+
+                    .date {
+                        letter-spacing: 0.44px;
+                        color: #787878;
+                        margin-left: 1rem;
+                    }
+                }
+
+                p {
+                    font-size: 2.2rem;
+                    font-weight: 500;
+                    letter-spacing: 0.35px;
+                    color: #000000;
+                    margin-top: 1rem;
+                }
+            }
+
+            .description {
+                padding: 0 1.5rem;
+                height: 14rem;
+                color: #787878;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+
+                p {
+                    font-size: 1.5rem;
+                    line-height: 1.53;
+                    letter-spacing: 0.24px;
+                    // margin: auto 0;
+                    &:nth-child(1) {
+                        @supports (object-fit: fill) {
+                            margin-top: auto;
+                        }
+                    }
+
+                    &:nth-child(2) {
+                        margin-bottom: 2.5rem;
+                        @supports (object-fit: fill) {
+                            margin-bottom: auto;
+                        }
+                    }
+
+                    &:only-of-type {
+                        margin-bottom: 4rem;
+                        @supports (object-fit: fill) {
+                            margin: auto 0;
+                        }
+                    }
+                }
+
+                .link {
+                    @include commonBtn;
+                    margin: initial;
+                    justify-items: flex-end;
+                }
+            }
+
+            @include respond(big-desktop) {
+                flex: 0 1 30rem;
+            }
+            /*   @include respond(tab-land) {
+                flex: 0 1 35rem;
+            } */
+        }
+    }
+
+    .articles {
+        padding: 0 5rem;
+
+        @include respond(phone) {
+            padding: 0;
+        }
+
+        @include respond(big-desktop) {
+            padding: 0;
+        }
+
+        ul {
+            margin: 5rem 0;
+        }
+
+        li {
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .title {
+            @include announce-link;
+            transition: all 0.2s;
+            &:hover {
+                color: $emome-blue;
+            }
+        }
+
+        .date,
+        .startDate,
+        .endDate {
+            @include announce-date;
+        }
+
+        .endDate {
+            position: relative;
+            &::before {
+                content: '~';
+                @include absCenter;
+                color: #000;
+                left: 0;
+                transform: translate(-1.5rem, -50%);
+            }
+        }
+    }
+}
+
+@mixin lock1280 {
+    @media (min-width: 1280px) {
+        width: 1280px;
+        margin: 2rem auto !important;
+    }
+}
+
+// MEDIA QUERY MANAGER
+/*
+  0 - 600px:      Phone
+  600 - 900px:    Tablet portrait
+  900 - 1200px:   Tablet landscape
+  [1200 - 1800] is where our normal styles apply
+  1800px + :      Big desktop
+
+  $breakpoint argument choices
+  - phone
+  -tab-port
+  -tab-land
+  -big-desktop
+
+  ORDER: Base + typography > general layout + grid > page layout > components
+
+  1em = 16px
+  */
+@mixin respond($breakpoint) {
+    @if $breakpoint == phone {
+        @media (max-width: 37.5em) {
+            // 600px
+            @content;
+        }
+    }
+    @if $breakpoint == tab-port {
+        @media (max-width: 56.25em) {
+            //900px)
+            @content;
+        }
+    }
+    @if $breakpoint == tab-land {
+        @media (max-width: 75em) {
+            //1200px
+            @content;
+        }
+    }
+    @if $breakpoint == big-desktop {
+        @media (min-width: 112.5em) {
+            //1800px
+            @content;
+        }
+    }
+}

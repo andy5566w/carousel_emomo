@@ -1,0 +1,252 @@
+.financial-bg {
+    background-image: $financial-bg-image;
+}
+
+.entertainment-bg {
+    background-image: $entertainment-bg-image;
+}
+
+.mobileFinancial-bg {
+    background-image: $mobileFinancial-bg-image;
+}
+
+.life-bg {
+    background-image: $life-bg-image;
+}
+
+.message-bg {
+    background-image: $message-bg-image;
+}
+
+.cover {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    @include flexCenter;
+    color: #ffffff;
+    &.mobileBillCard {
+        font-size: 3.2rem;
+        font-weight: 600;
+        letter-spacing: 0.62px;
+        text-align: center;
+        color: #ffffff;
+        opacity: 0.8;
+        background-image: linear-gradient(to bottom, #00a2ff, #3498db 80%);
+    }
+}
+
+.yellow-text {
+    color: $color-yellow;
+}
+
+.orange-text {
+    color: $color-orange;
+}
+
+.blue-text {
+    color: $color-blue;
+}
+
+.blue-text-2 {
+    color: $color-blue-2;
+}
+
+.green-text {
+    color: $color-green;
+}
+
+.skew-divider {
+    position: relative;
+    &:after {
+        content: '';
+        height: 5rem;
+        width: 1px;
+        position: absolute;
+        right: 0;
+
+        background-color: #d8d8d8;
+    }
+}
+
+.padding0 {
+    padding: 0 !important;
+}
+.padding2 {
+    padding: 2rem !important;
+}
+.padding5 {
+    padding: 5rem !important;
+}
+
+.pr1 {
+    padding-right: 1rem;
+}
+
+.restrict {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+// tabs
+%tab {
+    background-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.11)
+    );
+}
+.tab1 {
+    @extend %tab;
+    background-color: #fe7d03;
+}
+.tab2 {
+    @extend %tab;
+    background-color: #67ac0d;
+}
+.tab3 {
+    @extend %tab;
+    background-color: #365db6;
+}
+.tab4 {
+    @extend %tab;
+    background-color: #fc6e50;
+}
+.tab5 {
+    @extend %tab;
+    background-color: #2eb977;
+}
+
+.right-arrow {
+    position: relative;
+    &:after {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 1px;
+        height: 100%;
+        background-color: currentColor;
+        top: 0;
+        right: -10px;
+        transform: rotate(-45deg);
+    }
+    &:before {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 1px;
+        height: 100%;
+        background-color: currentColor;
+        top: 0;
+        right: -10px;
+        transform: rotate(45deg);
+    }
+}
+
+.hamburger {
+    cursor: pointer;
+    height: 4rem;
+    width: 4rem;
+    background-color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    span {
+        position: relative;
+        transform: translateY(1.5rem);
+        width: 100%;
+        background-color: #95a5a6;
+        height: 3px;
+        display: block;
+        &::before,
+        &::after {
+            position: absolute;
+            content: '';
+            display: block;
+            background-color: #95a5a6;
+            width: 100%;
+            height: 3px;
+        }
+
+        &::before {
+            top: 10px;
+        }
+        &::after {
+            bottom: 10px;
+        }
+    }
+}
+
+.three-dot {
+    height: 4rem;
+    width: 4rem;
+    background-color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    span {
+        position: relative;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: #95a5a6;
+        display: block;
+        margin: 0 auto;
+
+        &::before,
+        &::after {
+            @include absCenter;
+            content: '';
+            display: block;
+            background-color: #95a5a6;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+        }
+
+        &::before {
+            transform: translate(200%, -53%);
+        }
+        &::after {
+            transform: translate(-270%, -53%);
+        }
+    }
+    &:active {
+        transform: translateY(10px);
+    }
+}
+
+.dis-none {
+    display: none !important;
+}
+
+.back-btn {
+    display: block;
+    height: 7rem;
+    font-size: 1.6rem;
+    letter-spacing: 0.31px;
+    color: #787878;
+    border-bottom: solid 1px #ececec;
+}
+
+// flex
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.mx-auto {
+    margin: 0 auto;
+}
+
+.justify-between {
+    justify-content: space-between !important;
+}
+
+.disappear {
+    opacity: 0;
+    display: none;
+}
