@@ -29,15 +29,16 @@ function checkType(target) {
         '[object Number]': 'number - object',
         '[object String]': 'string - object',
         '[object Boolean]': 'boolean - object',
+        '[object HTMLDivElement]': 'HTMLElement'
     }
-
     if (target === null) {
         return 'null'
     } else if (ret == 'object') {
         // Object.prototype.toString
         // 包裝類別, new Number()
         var str = Object.prototype.toString.call(target)
-        return template[str]
+        if(template[str])return template[str]
+        else return 'HTMLElement'
     } else {
         return ret
     }
@@ -335,7 +336,7 @@ function setCookie(name, value, days) {
 function deleteCookie(name) {
     setCookie(name, '', -1)
 }
-export {
+export default {
     checkType,
     stopBubble,
     getStyle,

@@ -1,9 +1,11 @@
 import * as tool from '../tool/tool'
 import gsap from 'gsap'
+import configure from "../tool/configure";
 
 export default class carousel_emommo {
-    constructor({ wrap, slider } = {}) {
-        this.wrap = wrap
+    constructor({containerName, slider} = {}) {
+        this.wrap = configure.checkContainer(containerName)
+
         this.sliders = Array.prototype.slice.call(
             this.wrap.getElementsByClassName(slider)
         )
@@ -13,18 +15,37 @@ export default class carousel_emommo {
         if (this.sliders.length > 1) {
             this.init()
         } else {
-            gsap.to(this.sliders[0], { left: '0', opacity: 1 })
+            gsap.to(this.sliders[0], {left: '0', opacity: 1})
             this.prevBtn.style.display = 'none'
             this.nextBtn.style.display = 'none'
         }
     }
 
+    configure() {
+        this.currentPosition = 0
+        this.delayStatus
+        this.prevPosition = this.sliders.length - 1
+        this.nextPosition = this.currentPosition + 1
+        this.count = 0
+        this.isAllowClick = true
+        this.duration = 1
+        this.delay = 5
+        this.numberPointer = 0
+        this.controlBarSpans = []
+        this.prevBtn = this.wrap.getElementsByClassName('prev')[0]
+        this.nextBtn = this.wrap.getElementsByClassName('next')[0]
+        this.numOfControlBar = 5
+        if (window && window.innerWidth <= 1280 && window.innerWidth > 600)
+            this.numOfControlBar = 4
+        else if (window.innerWidth <= 600) this.numOfControlBar = 3
+    }
+
     init() {
         this.sliders.forEach((slide, index) => {
-            if (index !== 0) gsap.to(slide, { left: '100%' })
+            if (index !== 0) gsap.to(slide, {left: '100%'})
         })
 
-        gsap.to(this.sliders[0], { opacity: 1 })
+        gsap.to(this.sliders[0], {opacity: 1})
 
         this.autoPlay()
 
@@ -188,7 +209,7 @@ export default class carousel_emommo {
                             if (this.currentPosition === imgIndex) return
                             gsap.fromTo(
                                 this.sliders[this.currentPosition],
-                                { opacity: 0 },
+                                {opacity: 0},
                                 {
                                     left: '100%',
                                 }
@@ -239,7 +260,7 @@ export default class carousel_emommo {
                     controlIndex > -1 ? controlIndex : this.nextPosition
                 gsap.fromTo(
                     this.sliders[this.currentPosition],
-                    { left: 0, duration: this.duration, opacity: 1 },
+                    {left: 0, duration: this.duration, opacity: 1},
                     {
                         left: `-100%`,
                         duration: this.duration,
@@ -247,7 +268,7 @@ export default class carousel_emommo {
                 )
                 gsap.fromTo(
                     this.sliders[targetAddActive],
-                    { opacity: 1, left: '100%', duration: this.duration },
+                    {opacity: 1, left: '100%', duration: this.duration},
                     {
                         left: 0,
                         duration: this.duration,
@@ -267,7 +288,7 @@ export default class carousel_emommo {
                     controlIndex > -1 ? controlIndex : this.prevPosition
                 gsap.fromTo(
                     this.sliders[this.currentPosition],
-                    { left: 0, duration: this.duration, opacity: 1 },
+                    {left: 0, duration: this.duration, opacity: 1},
                     {
                         left: `100%`,
                         duration: this.duration,
@@ -348,7 +369,7 @@ export default class carousel_emommo {
                     (this.currentPosition % this.numOfControlBar ===
                         this.numOfControlBar - 1 ||
                         this.currentPosition ===
-                            this.controlBarSpans.length - 1)
+                        this.controlBarSpans.length - 1)
                 ) {
                     this.orderControlBar('prev')
                 }
@@ -398,22 +419,4 @@ export default class carousel_emommo {
         target.forEach((e) => e.classList.remove('active'))
     }
 
-    configure() {
-        this.currentPosition = 0
-        this.delayStatus
-        this.prevPosition = this.sliders.length - 1
-        this.nextPosition = this.currentPosition + 1
-        this.count = 0
-        this.isAllowClick = true
-        this.duration = 1
-        this.delay = 5
-        this.numberPointer = 0
-        this.controlBarSpans = []
-        this.prevBtn = this.wrap.getElementsByClassName('prev')[0]
-        this.nextBtn = this.wrap.getElementsByClassName('next')[0]
-        this.numOfControlBar = 5
-        if (window && window.innerWidth <= 1280 && window.innerWidth > 600)
-            this.numOfControlBar = 4
-        else if (window.innerWidth <= 600) this.numOfControlBar = 3
-    }
 }

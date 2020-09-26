@@ -1,7 +1,6 @@
 import * as tool from './tool/tool'
 import carousel_emommo from './component/carouselV2'
 import '@babel/polyfill'
-    ;
 
 (function () {
     tool.fixForEach()
@@ -12,7 +11,7 @@ import '@babel/polyfill'
                 'container'
             )
             for (let i = 0; i < carousels.length; i++) {
-                new carousel_emommo({wrap: carousels[i], slider: 'image'})
+                new carousel_emommo({containerName: carousels[i], slider: 'image'})
             }
         } catch (err) {
             console.log('輪播 err', err)
