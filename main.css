@@ -1,0 +1,541 @@
+@charset "UTF-8";
+/*
+  0 - 600px:      Phone
+  600 - 900px:    Tablet portrait
+  900 - 1200px:   Tablet landscape
+  [1200 - 1800] is where our normal styles apply
+  1800px + :      Big desktop
+
+  $breakpoint argument choices
+  - phone
+  -tab-port
+  -tab-land
+  -big-desktop
+
+  ORDER: Base + typography > general layout + grid > page layout > components
+
+  1em = 16px
+  */
+@keyframes clicked {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes down {
+  0% {
+    transform: translateY(0);
+  }
+}
+@keyframes leftLeave {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+@keyframes leftEnter {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes rightLeave {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+@keyframes rightEnter {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: "微軟正黑體", "Microsoft JhengHei", "PingFangTC", "Noto Sans TC", sans-serif;
+}
+html button:focus {
+  outline: none;
+}
+html a {
+  text-decoration: none;
+  color: inherit;
+}
+html a.disabled {
+  pointer-events: none;
+}
+html li {
+  list-style: none;
+}
+html input:focus,
+html select:focus {
+  outline: none;
+}
+@media (max-width: 75em) {
+  html {
+    font-size: 56.25%;
+  }
+}
+@media (max-width: 56.25em) {
+  html {
+    font-size: 50%;
+  }
+}
+@media (min-width: 112.5em) {
+  html {
+    font-size: 75%;
+  }
+}
+
+.financial-bg {
+  background-image: linear-gradient(to bottom, #c898cf, #b671c3 99%);
+}
+
+.entertainment-bg {
+  background-image: linear-gradient(to bottom, #e591a9, #ea4b80 97%);
+}
+
+.mobileFinancial-bg {
+  background-image: linear-gradient(to bottom, #9ccb7a, #28b46d 97%);
+}
+
+.life-bg {
+  background-image: linear-gradient(to bottom, #58a3dc, #3887dc 97%);
+}
+
+.message-bg {
+  background-image: linear-gradient(to bottom, #ffc88a, #f78d38 97%);
+}
+
+.cover {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+}
+.cover.mobileBillCard {
+  font-size: 3.2rem;
+  font-weight: 600;
+  letter-spacing: 0.62px;
+  text-align: center;
+  color: #ffffff;
+  opacity: 0.8;
+  background-image: linear-gradient(to bottom, #00a2ff, #3498db 80%);
+}
+
+.yellow-text {
+  color: #fff368;
+}
+
+.orange-text {
+  color: #fe7d03;
+}
+
+.blue-text {
+  color: #0468fa;
+}
+
+.blue-text-2 {
+  color: #00a2ff;
+}
+
+.green-text {
+  color: #0a9400;
+}
+
+.skew-divider {
+  position: relative;
+}
+.skew-divider:after {
+  content: "";
+  height: 5rem;
+  width: 1px;
+  position: absolute;
+  right: 0;
+  background-color: #d8d8d8;
+}
+
+.padding0 {
+  padding: 0 !important;
+}
+
+.padding2 {
+  padding: 2rem !important;
+}
+
+.padding5 {
+  padding: 5rem !important;
+}
+
+.pr1 {
+  padding-right: 1rem;
+}
+
+.restrict {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.tab5, .tab4, .tab3, .tab2, .tab1 {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.11));
+}
+
+.tab1 {
+  background-color: #fe7d03;
+}
+
+.tab2 {
+  background-color: #67ac0d;
+}
+
+.tab3 {
+  background-color: #365db6;
+}
+
+.tab4 {
+  background-color: #fc6e50;
+}
+
+.tab5 {
+  background-color: #2eb977;
+}
+
+.right-arrow {
+  position: relative;
+}
+.right-arrow:after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 1px;
+  height: 100%;
+  background-color: currentColor;
+  top: 0;
+  right: -10px;
+  transform: rotate(-45deg);
+}
+.right-arrow:before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 1px;
+  height: 100%;
+  background-color: currentColor;
+  top: 0;
+  right: -10px;
+  transform: rotate(45deg);
+}
+
+.hamburger {
+  cursor: pointer;
+  height: 4rem;
+  width: 4rem;
+  background-color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+}
+.hamburger span {
+  position: relative;
+  transform: translateY(1.5rem);
+  width: 100%;
+  background-color: #95a5a6;
+  height: 3px;
+  display: block;
+}
+.hamburger span::before, .hamburger span::after {
+  position: absolute;
+  content: "";
+  display: block;
+  background-color: #95a5a6;
+  width: 100%;
+  height: 3px;
+}
+.hamburger span::before {
+  top: 10px;
+}
+.hamburger span::after {
+  bottom: 10px;
+}
+
+.three-dot {
+  height: 4rem;
+  width: 4rem;
+  background-color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+.three-dot span {
+  position: relative;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #95a5a6;
+  display: block;
+  margin: 0 auto;
+}
+.three-dot span::before, .three-dot span::after {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  content: "";
+  display: block;
+  background-color: #95a5a6;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+.three-dot span::before {
+  transform: translate(200%, -53%);
+}
+.three-dot span::after {
+  transform: translate(-270%, -53%);
+}
+.three-dot:active {
+  transform: translateY(10px);
+}
+
+.dis-none {
+  display: none !important;
+}
+
+.back-btn {
+  display: block;
+  height: 7rem;
+  font-size: 1.6rem;
+  letter-spacing: 0.31px;
+  color: #787878;
+  border-bottom: solid 1px #ececec;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.mx-auto {
+  margin: 0 auto;
+}
+
+.justify-between {
+  justify-content: space-between !important;
+}
+
+.disappear {
+  opacity: 0;
+  display: none;
+}
+
+.ml-small {
+  margin-left: 1rem;
+}
+
+.resetP {
+  padding: 0 !important;
+}
+
+.just-self-start {
+  justify-self: flex-start;
+}
+
+.mb-5 {
+  margin-bottom: 5rem !important;
+}
+
+.mr-auto {
+  margin-right: auto;
+}
+
+.container a {
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.container {
+  padding-top: 30%;
+  position: relative;
+  overflow: hidden;
+}
+.container .removeControl {
+  top: 45%;
+}
+.container a {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 37.5em) {
+  .container a {
+    background-size: 160% 100%;
+  }
+}
+.container .prev,
+.container .next {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 4rem;
+  height: 4rem;
+  background-color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow: 2px 3px 9px 0 rgba(0, 0, 0, 0.16);
+}
+.container .prev:after,
+.container .next:after {
+  content: " ";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 50%;
+  left: 54%;
+  border-right: 1px solid #787878;
+  border-bottom: 1px solid #787878;
+  transform: translate(-50%, -50%) rotate(135deg);
+}
+.container .next {
+  left: 95%;
+}
+.container .next:after {
+  left: 47%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+.container .prev {
+  left: 5%;
+}
+.container .controlBar {
+  overflow: hidden;
+  width: 100%;
+  height: 4rem;
+  position: absolute;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  display: flex;
+  flex-wrap: wrap;
+}
+.container .controlBar .control {
+  display: block;
+  flex: 1 1 auto;
+  height: 4rem;
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 0.7;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 4rem;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.container .controlBar .control:not(:last-child)::after {
+  position: absolute;
+  top: 10%;
+  right: 0;
+  content: "";
+  display: block;
+  background-color: #fff;
+  width: 1px;
+  height: 80%;
+  transform: skewX(-45deg);
+}
+.container .controlBar .control:active, .container .controlBar .control.active {
+  color: #fff;
+  opacity: 1;
+  font-size: 1.6rem;
+}
+.container .controlBar .control.d-none {
+  display: none;
+  pointer-events: none;
+}
+@media (max-width: 37.5em) {
+  .container {
+    height: 20rem;
+  }
+}
+.container.carousel570 {
+  padding-top: 30%;
+}
+@media (max-width: 37.5em) {
+  .container.carousel570 a,
+.container.carousel570 .text {
+    background-size: 160% 100%;
+  }
+}
+.container.carousel310 {
+  padding-top: 16%;
+}
+@media (max-width: 37.5em) {
+  .container.carousel310 a,
+.container.carousel310 .text {
+    background-size: 133% 100%;
+  }
+}
+.container .video {
+  top: 0;
+  position: absolute;
+  height: 100%;
+}
+.container .text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10rem;
+  color: #fff;
+  background: linear-gradient(to bottom, #0aa2fd, #0468fa);
+}
+@media (max-width: 37.5em) {
+  .container .text {
+    font-size: 3rem;
+    background-size: 160% 100%;
+  }
+}
+
+/*# sourceMappingURL=main.css.map */

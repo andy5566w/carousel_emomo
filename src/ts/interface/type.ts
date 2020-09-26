@@ -1,6 +1,4 @@
-namespace App{
-    export interface Carousel {
-        containerName: String | HTMLElement
-        sliders: String | HTMLElement
-    }
+export interface Carousel {
+  containerName: String | HTMLElement;
+  sliders: String | HTMLElement;
 }
