@@ -1,31 +1,36 @@
-import { containerNameCheck, buildNextOrPrevBtn } from './utility/configure'
+import {
+  containerNameCheck,
+  buildNextOrPrevBtn,
+  buildDom,
+} from './utility/configure'
 import { Carousel } from './models/carousel'
 // @ts-ignore
 import gsap from 'gsap'
 // @ts-ignore
 window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
-  private containerName: HTMLElement
+  private readonly containerName: HTMLElement
   private readonly sliders: Array<HTMLElement>
   private currentPosition: number = 0
   private delayStatus?: gsap
   private prevPosition: number = 0
   private nextPosition: number = -1
-  private count: number | string = 0
   private isAllowClick: boolean = true
   private duration: number | string = 1
   private delay: number = 5
   private numberPointer: number = 0
-  private controlBarSpans: Array<HTMLDivElement> = []
-  private prevBtn?: HTMLDivElement
-  private nextBtn?: HTMLDivElement
+  private controlBarSpans: Array<HTMLDivElement | HTMLSpanElement> = []
+  private prevBtn: HTMLDivElement = buildNextOrPrevBtn('prev') as HTMLDivElement
+  private nextBtn: HTMLDivElement = buildNextOrPrevBtn('next') as HTMLDivElement
   private numOfControlBar: number = 5
-  private controlBar?: HTMLDivElement
+  private controlBar?: HTMLElement
 
   constructor(option: T) {
     this.containerName = containerNameCheck(option.containerName)
 
     if (typeof option.sliders === 'string')
-      this.sliders = Array.prototype.slice.call(option.sliders)
+      this.sliders = Array.prototype.slice.call(
+        document.getElementsByClassName(option.sliders)
+      )
     else
       throw new Error(
         '參數 sliders is not invalid, error type is ' + typeof option.sliders
@@ -57,18 +62,97 @@ window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
 
     this.bindClickEvent()
 
-    this.bindHoverEvent()
-
-    if (this.containerName.dataset.controlbar === 'true') {
-      this.buildControlBar()
-      this.orderControlBar()
-      this.controlBarSpans[0].classList.add('active')
-    }
     if (window.innerWidth < 600) {
-      this.prevBtn.style = 'display:none;'
-      this.nextBtn.style = 'display:none;'
+      this.bindHoverEvent()
+      this.prevBtn.style.display = 'none'
+      this.nextBtn.style.display = 'none'
       this.bindSwipeEvent()
     }
+  }
+
+  private bindSwipeEvent() {
+    this.sliders.forEach((slide) => {
+      this.detectSwipe(slide, (el: Element, d: string) => {
+        if (d === 'l') {
+          this.delayStatus.kill()
+          this.navigator('next')
+        } else if (d === 'r') {
+          this.delayStatus.kill()
+          this.navigator('prev')
+        }
+      })
+    })
+  }
+
+  private detectSwipe(el: Element, func: Function) {
+    var swipe_det = {
+      sX: 0,
+      sY: 0,
+      eX: 0,
+      eY: 0,
+    }
+    let min_x = 30 //min x swipe for horizontal swipe
+    let max_x = 30 //max x difference for vertical swipe
+    let min_y = 50 //min y swipe for vertical swipe
+    let max_y = 60 //max y difference for horizontal swipe
+    let direc = ''
+    let ele = el
+    ele.addEventListener(
+      'touchstart',
+      function (e: any) {
+        let t = e.touches[0]
+        swipe_det.sX = t.screenX
+        swipe_det.sY = t.screenY
+      },
+      false
+    )
+    ele.addEventListener(
+      'touchmove',
+      function (e: any) {
+        e.preventDefault()
+        var t = e.touches[0]
+        swipe_det.eX = t.screenX
+        swipe_det.eY = t.screenY
+      },
+      false
+    )
+    ele.addEventListener(
+      'touchend',
+      function (e) {
+        //horizontal detection
+        if (
+          (swipe_det.eX - min_x > swipe_det.sX ||
+            swipe_det.eX + min_x < swipe_det.sX) &&
+          swipe_det.eY < swipe_det.sY + max_y &&
+          swipe_det.sY > swipe_det.eY - max_y &&
+          swipe_det.eX > 0
+        ) {
+          if (swipe_det.eX > swipe_det.sX) direc = 'r'
+          else direc = 'l'
+        }
+        //vertical detection
+        else if (
+          (swipe_det.eY - min_y > swipe_det.sY ||
+            swipe_det.eY + min_y < swipe_det.sY) &&
+          swipe_det.eX < swipe_det.sX + max_x &&
+          swipe_det.sX > swipe_det.eX - max_x &&
+          swipe_det.eY > 0
+        ) {
+          if (swipe_det.eY > swipe_det.sY) direc = 'd'
+          else direc = 'u'
+        }
+
+        if (direc != '') {
+          if (typeof func == 'function') func(el, direc)
+        }
+        direc = ''
+        swipe_det.sX = 0
+        swipe_det.sY = 0
+        swipe_det.eX = 0
+        swipe_det.eY = 0
+      },
+      false
+    )
   }
 
   private autoPlay(type: string = '') {
@@ -91,11 +175,10 @@ window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
   private navigator(type: string = '', controlIndex?: number) {
     if (this.isAllowClick) {
       this.isAllowClick = false
-      let targetAddActive: number
-
+      let targetAddActive: number = -1
       if (type === 'next') {
-        targetAddActive =
-          controlIndex && controlIndex > -1 ? controlIndex : this.nextPosition
+        if (controlIndex != null) targetAddActive = controlIndex
+        else targetAddActive = this.nextPosition
         gsap.fromTo(
           this.sliders[this.currentPosition],
           { left: 0, duration: this.duration, opacity: 1 },
@@ -122,8 +205,8 @@ window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
           this.isAllowClick = true
         })
       } else if (type === 'prev') {
-        targetAddActive =
-          controlIndex && controlIndex > -1 ? controlIndex : this.prevPosition
+        if (controlIndex != null) targetAddActive = controlIndex
+        else targetAddActive = this.prevPosition
         gsap.fromTo(
           this.sliders[this.currentPosition],
           { left: 0, duration: this.duration, opacity: 1 },
@@ -154,7 +237,6 @@ window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
           this.isAllowClick = true
         })
       }
-
       this.calcPosition()
 
       if (this.controlBarSpans.length > 0) {
@@ -192,20 +274,27 @@ window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
     this.prevPosition = this.sliders.length - 1
     this.nextPosition = this.currentPosition + 1
 
-    // this.count = 0
-    // this.isAllowClick = true
-    // this.duration = 1
-    // this.delay = 5
-    // this.numberPointer = 0
-    // this.controlBarSpans = []
+    if (this.containerName) {
+      this.containerName.appendChild(this.prevBtn)
+      this.containerName.appendChild(this.nextBtn)
+    }
 
-    this.prevBtn = buildNextOrPrevBtn('prev') as HTMLDivElement
-    this.nextBtn = buildNextOrPrevBtn('next') as HTMLDivElement
+    if (option.delay != null) this.delay = option.delay
+    if (option.numOfControlBar != null)
+      this.numOfControlBar = option.numOfControlBar
 
-    this.numOfControlBar = 5
+    if (option.showControlBar) {
+      this.buildControlBar()
+      this.orderControlBar()
+      this.controlBarSpans[0].classList.add('active')
+    }
+
     if (window && window.innerWidth <= 1280 && window.innerWidth > 600)
-      this.numOfControlBar = 4
-    else if (window.innerWidth <= 600) this.numOfControlBar = 3
+      this.numOfControlBar =
+        this.numOfControlBar - 1 ? this.numOfControlBar - 1 : 1
+    else if (window.innerWidth <= 600)
+      this.numOfControlBar =
+        this.numOfControlBar - 2 ? this.numOfControlBar - 2 : 1
   }
 
   private calcPosition() {
@@ -219,7 +308,9 @@ window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
         : this.currentPosition - 1
   }
 
-  private static removeActiveClass(target: Array<HTMLDivElement> = []) {
+  private static removeActiveClass(
+    target: Array<HTMLDivElement | HTMLSpanElement> = []
+  ) {
     target.forEach((e) => e.classList.remove('active'))
   }
 
@@ -258,19 +349,6 @@ window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
   }
 
   private bindClickEvent() {
-    // tool.addEvent(this.prevBtn, 'click', () => {
-    //   if (this.isAllowClick) {
-    //     this.delayStatus.kill()
-    //     this.navigator('prev')
-    //   }
-    // })
-    // tool.addEvent(this.nextBtn, 'click', () => {
-    //   if (this.isAllowClick) {
-    //     this.delayStatus.kill()
-    //     this.navigator('next')
-    //   }
-    // })
-
     this.prevBtn!.addEventListener('click', () => {
       if (this.isAllowClick) {
         this.delayStatus!.kill()
@@ -281,7 +359,7 @@ window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
     this.nextBtn!.addEventListener('click', () => {
       if (this.isAllowClick) {
         this.delayStatus!.kill()
-        this.navigator('prev')
+        this.navigator('next')
       }
     })
   }
@@ -299,32 +377,36 @@ window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
 
   private buildControlBar() {
     this.sliders.forEach((img, imgIndex) => {
-      let _span = tool.buildDom('span', img.dataset.title, {
-        classList: ['control'],
-        functionArray: {
-          click: () => {
-            if (this.isAllowClick) {
-              if (this.currentPosition === imgIndex) return
-              gsap.fromTo(
-                this.sliders[this.currentPosition],
-                { opacity: 0 },
-                {
-                  left: '100%',
-                }
-              )
-              let direction = this.currentPosition < imgIndex ? 'next' : 'prev'
-              this.delayStatus.kill()
-              this.navigator(direction, imgIndex)
-            }
+      if (img.dataset.title != null) {
+        // @ts-ignore
+        let _span = buildDom('span', img.dataset.title, {
+          classList: { control: 'control' },
+          functionArray: {
+            click: () => {
+              if (this.isAllowClick) {
+                if (this.currentPosition === imgIndex) return
+                gsap.fromTo(
+                  this.sliders[this.currentPosition],
+                  { opacity: 0 },
+                  {
+                    left: '100%',
+                  }
+                )
+                let direction =
+                  this.currentPosition < imgIndex ? 'next' : 'prev'
+                this.delayStatus.kill()
+                this.navigator(direction, imgIndex)
+              }
+            },
           },
-        },
-      })
-      this.controlBarSpans.push(_span)
+        })
+        this.controlBarSpans.push(_span)
+      }
     })
 
-    this.controlBar = tool.buildDom('div', null, {
-      classList: ['controlBar'],
+    this.controlBar = buildDom('div', null, {
+      classList: { controlBar: 'controlBar' },
     })
-    this.wrap.insertAdjacentElement('beforeend', this.controlBar)
+    this.containerName.insertAdjacentElement('beforeend', this.controlBar)
   }
 }

@@ -1,15 +1,16 @@
-const path = require("path");
+const path = require('path')
 module.exports = {
-  entry: "./src/ts/App.ts",
+  entry: './src/ts/App.ts',
   output: {
-    filename: "carousel_emomo.js",
+    filename: 'carousel_emomo.js',
     path: path.resolve(__dirname),
   },
-  devtool: "inline-source-map",
+  devtool: 'inline-source-map',
   module: {
-    rules: [{ test: /\.ts$/, use: "ts-loader", exclude: /node_modules/ }],
+    rules: [{ test: /\.ts$/, use: 'ts-loader', exclude: /node_modules/ }],
   },
   resolve: {
-    extensions: [".ts", ".js"],
+    extensions: ['.ts', '.js'],
   },
-};
+  mode: 'development',
+}

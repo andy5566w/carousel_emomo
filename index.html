@@ -2,32 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./dist/css/main.css">
     <title>Title</title>
 </head>
 <body>
-<div class="container" data-controlBar="true">
+<div class="container">
     <div class="carousel">
-        <div class="next"></div>
-        <div class="prev"></div>
         <iframe
-                class="image item video"
+                class="slider video"
                 data-index="0"
                 data-title="啾啾鞋"
                 src="https://www.youtube.com/embed/KwhhgX-tSaA?autoplay=1"
                 width="100%"
         ></iframe>
         <a
-                class="image item text"
-                data-index="1"
+                class="slider text"
                 data-title="學生青春無敵"
                 href="javascript:void(false)"
         >
             青春無敵學生青春無敵
         </a>
         <a
-                class="image item"
-                data-index=2"
+                class="slider"
                 data-title="學生青春無敵"
                 href="javascript:void(false)"
                 style="
@@ -36,8 +33,7 @@
         >
         </a>
         <a
-                class="image item"
-                data-index="3"
+                class="slider"
                 data-title="愛瘋限時折價"
                 href="javascript:void(false)"
                 style="
@@ -46,8 +42,7 @@
         >
         </a>
         <a
-                class="image item"
-                data-index="4"
+                class="slider"
                 data-title="電信帳單代收"
                 href="javascript:void(false)"
                 style="
@@ -57,10 +52,19 @@
         </a>
     </div>
 </div>
-<div class="test_div" style="height: 100px; width: 100px; background: red;"></div>
 </body>
 <script src="carousel_emomo.js"></script>
 <script>
-    const a = new carousel_emomo()
+    try{
+        new carousel_emomo({
+            containerName: 'container',
+            sliders: 'slider',
+            delay:5,
+            numOfControlBar:4,
+            showControlBar: true
+        })
+    }catch (e) {
+        console.log(e)
+    }
 </script>
 </html>
