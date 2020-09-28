@@ -53,8 +53,8 @@ Javascript
 new carousel_emomo({
     containerName: 'container',
     sliders: 'slider',
-    delay:5,
-    numOfControlBar:4,
+    delay: 5,
+    numOfControlBar: 4,
     showControlBar: true
 })
 ```

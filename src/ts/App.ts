@@ -289,12 +289,9 @@ window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
       this.controlBarSpans[0].classList.add('active')
     }
 
-    if (window && window.innerWidth <= 1280 && window.innerWidth > 600)
+    if (window.innerWidth <= 600)
       this.numOfControlBar =
-        this.numOfControlBar - 1 ? this.numOfControlBar - 1 : 1
-    else if (window.innerWidth <= 600)
-      this.numOfControlBar =
-        this.numOfControlBar - 2 ? this.numOfControlBar - 2 : 1
+        this.numOfControlBar - 2 > 1 ? this.numOfControlBar - 2 : 1
   }
 
   private calcPosition() {
