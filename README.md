@@ -58,3 +58,5 @@ new carousel_emomo({
     showControlBar: true
 })
 ```
+##Demo
+[DEMO](https://andy5566w.github.io/carousel_emomo/)
