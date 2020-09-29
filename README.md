@@ -1,5 +1,9 @@
 # Carousel_EMOMO
+## Demo
 
+[DEMO](https://andy5566w.github.io/carousel_emomo/)
+
+![demo_carousel_emomo](https://i.makeagif.com/media/9-29-2020/tgFwek.gif)
 ## 如何使用
 ```bash
 npm i @andy5566/carousel_emomo
@@ -68,5 +72,3 @@ HTML
 | numOfControlBar | number | 下放控制欄要顯示的數量
 
 
-##Demo
-[DEMO](https://andy5566w.github.io/carousel_emomo/)

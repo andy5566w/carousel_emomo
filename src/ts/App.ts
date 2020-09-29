@@ -6,8 +6,8 @@ import {
 import { Carousel } from './models/carousel'
 // @ts-ignore
 import gsap from 'gsap'
-// @ts-ignore
-window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
+
+export const carousel_emomo = class carousel_emommo<T extends Carousel> {
   private readonly containerName: HTMLElement
   private readonly sliders: Array<HTMLElement>
   private currentPosition: number = 0
@@ -21,7 +21,7 @@ window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
   private controlBarSpans: Array<HTMLDivElement | HTMLSpanElement> = []
   private prevBtn: HTMLDivElement = buildNextOrPrevBtn('prev') as HTMLDivElement
   private nextBtn: HTMLDivElement = buildNextOrPrevBtn('next') as HTMLDivElement
-  private numOfControlBar: number = 5
+  private numOfControlBar: number = 0
   private controlBar?: HTMLElement
 
   constructor(option: T) {
@@ -61,13 +61,6 @@ window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
     this.autoPlay()
 
     this.bindClickEvent()
-
-    if (window.innerWidth < 600) {
-      this.bindHoverEvent()
-      this.prevBtn.style.display = 'none'
-      this.nextBtn.style.display = 'none'
-      this.bindSwipeEvent()
-    }
   }
 
   private bindSwipeEvent() {
@@ -282,16 +275,22 @@ window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
     if (option.delay != null) this.delay = option.delay
     if (option.numOfControlBar != null)
       this.numOfControlBar = option.numOfControlBar
+    if (window.innerWidth < 600) {
+      this.bindHoverEvent()
+      this.prevBtn.style.display = 'none'
+      this.nextBtn.style.display = 'none'
+      this.bindSwipeEvent()
+    }
+
+    if (window.innerWidth <= 600)
+      this.numOfControlBar =
+        this.numOfControlBar - 2 > 1 ? this.numOfControlBar - 2 : 1
 
     if (option.showControlBar) {
       this.buildControlBar()
       this.orderControlBar()
       this.controlBarSpans[0].classList.add('active')
     }
-
-    if (window.innerWidth <= 600)
-      this.numOfControlBar =
-        this.numOfControlBar - 2 > 1 ? this.numOfControlBar - 2 : 1
   }
 
   private calcPosition() {
@@ -312,7 +311,6 @@ window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
   }
 
   private orderControlBar(type = 'next') {
-    // tool.removeAllContainerChildren(this.controlBar)
     if (this.controlBar) this.controlBar.innerHTML = ''
     let count = 0
 
@@ -407,3 +405,6 @@ window['carousel_emomo'] = class carousel_emommo<T extends Carousel> {
     this.containerName.insertAdjacentElement('beforeend', this.controlBar)
   }
 }
+
+// @ts-ignore
+window['carousel_emomo'] = carousel_emomo
